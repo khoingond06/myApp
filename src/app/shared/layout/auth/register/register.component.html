@@ -1,0 +1,35 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>Đăng ký</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <div class="form-group">
+        <label>Tên đăng nhập:</label>
+        <input type="text" formControlName="username" placeholder="Nhập tên đăng nhập" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="text" formControlName="email" placeholder="Nhập email" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Mật khẩu:</label>
+        <input type="password" formControlName="password" placeholder="Nhập mật khẩu" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Xác nhận mật khẩu:</label>
+        <input type="password" formControlName="confirmPassword" placeholder="Nhập mật khẩu" class="form-control">
+      </div>
+
+      <button type="submit" [disabled]="loading" class="btn-login">
+        {{ loading ? 'Đang đăng ký...' : 'Đăng ký' }}
+      </button>
+    </form>
+    <div>Đã có tài khoản? <a [routerLink]="['/login']">Đăng nhập ngay</a></div>
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  </div>
+</div>
