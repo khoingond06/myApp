@@ -1,0 +1,96 @@
+<div class="cms-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="brand-name">TetraTactic CMS</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group">TỔNG QUAN</div>
+      <a class="nav-item" [routerLink]="['/cms/dashboard']" routerLinkActive="active">Bảng điều khiển</a>
+
+      <div class="nav-group">QUẢN LÝ NỘI DUNG</div>
+      <a class="nav-item" [routerLink]="['/cms/sets']" routerLinkActive="active">Mùa giải</a>
+      <a class="nav-item" >Tướng</a>
+      <a class="nav-item">Hệ tộc</a>
+      <a class="nav-item">Trang bị</a>
+      <a class="nav-item">Đội hình</a>
+
+      <div class="nav-group">HỆ THỐNG</div>
+      <a class="nav-item">Thông báo</a>
+      <a class="nav-item">Người dùng</a>
+      <a class="nav-item">Vai trò & Quyền</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button (click)="logout()" class="btn-logout-sidebar">Đăng xuất</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="cms-header">
+      <div class="breadcrumb" [routerLink]="['/brank']">Trang chủ > <b>{{ currentTitle }}</b></div>
+      
+      <div class="header-tools">
+        <!-- Ngôn ngữ -->
+        <div class="tool-item dropdown-trigger" (click)="toggleDropdown('lang', $event)">
+          <span class="lang-text">🌐 VI</span>
+          <div class="dropdown-menu lang-menu" *ngIf="activeDropdown === 'lang'">
+            <div class="menu-item active">VN Tiếng Việt</div>
+            <div class="menu-item">US English</div>
+          </div>
+        </div>
+
+        <!-- Tin nhắn -->
+        <div class="tool-item dropdown-trigger" (click)="toggleDropdown('msg', $event)">
+          <span class="icon">💬</span>
+          <div class="dropdown-menu list-menu" *ngIf="activeDropdown === 'msg'">
+            <div class="menu-header">Tin nhắn</div>
+            <div class="list-item" *ngFor="let m of myInfo">
+              <div class="item-body">
+                <div class="item-top"><strong>{{ m.otherUsername }}</strong></div>
+                <div class="item-text">{{ m.lastMessage }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thông báo -->
+        <div class="tool-item dropdown-trigger" (click)="toggleDropdown('noti', $event)">
+          <span class="icon">🔔</span>
+          <div class="dropdown-menu list-menu" *ngIf="activeDropdown === 'noti'">
+            <div class="menu-header">Thông báo</div>
+            <div class="list-item" *ngFor="let n of notifications">
+              <div class="item-body">
+                <div class="item-top"><strong>{{ n.title }}</strong></div>
+                <div class="item-text">{{ n.content }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="tool-item profile-trigger" (click)="toggleDropdown('profile', $event)">
+          <div class="user-avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+          <div class="user-info-text">
+            <span class="name">{{ userName }}</span>
+            <span class="role">ADMIN</span>
+          </div>
+          <div class="dropdown-menu profile-menu" *ngIf="activeDropdown === 'profile'">
+            <div class="profile-header"><strong>{{ userName }}</strong></div>
+            <div class="menu-item">Đổi mật khẩu</div>
+            <div class="menu-item" [routerLink]="['/brank']">Thoát vùng CMS</div>
+            <div class="divider"></div>
+            <div class="menu-item logout-red" (click)="logout()">Đăng xuất</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Nơi hiển thị nội dung động của từng trang -->
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
