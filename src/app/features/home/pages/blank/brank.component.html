@@ -1,0 +1,33 @@
+<div class="dashboard-layout">
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-left">
+      <h1 class="logo">MyApp</h1>
+      <nav class="main-nav">
+        <a routerLink="/brank" class="nav-item active">Trang chủ</a>
+        <a href="#" class="nav-item">Sản phẩm</a>
+        <a href="#" class="nav-item">Quản lý</a>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      
+      <div class="lang-switcher">
+        <span [class.active]="currentLang === 'VN'" (click)="changeLang('VN')">VN</span>
+        <span class="divider">|</span>
+        <span [class.active]="currentLang === 'EN'" (click)="changeLang('EN')">EN</span>
+      </div>
+      <button class="btn-cms" [routerLink]="['/cms']">Quản trị CMS</button>
+      <span class="user-greeting">Xin chào, <strong>{{ userName }}</strong></span>
+      <button (click)="logout()" class="btn-logout">Đăng xuất</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="content-area">
+    <div class="card">
+      <h2>Chào mừng bạn quay trở lại!</h2>
+      <p>Đây là trang Dashboard (Blank page) của bạn.</p>
+    </div>
+  </main>
+</div>
