@@ -1,0 +1,23 @@
+<div class="dashboard-body">
+  <h1>Admin Dashboard</h1>
+  <p>Chào buổi sáng, {{ userName }} 👋</p>
+
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let item of stats">
+      <div class="stat-label">{{ item.label }}</div>
+      <div class="stat-value">{{ item.value }}</div>
+      <!-- <div class="stat-trend">{{ item.trend }}</div> -->
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-box large">
+      <h3>Số tướng theo từng Set</h3>
+      <div class="placeholder-chart bar-chart"></div>
+    </div>
+    <div class="chart-box small">
+      <h3>Phân bổ Traits</h3>
+      <div class="placeholder-chart pie-chart"></div>
+    </div>
+  </div>
+</div>
