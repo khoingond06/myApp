@@ -1,0 +1,22 @@
+<div class="pagination-footer">
+  <div class="items-per-page">
+    Items per page:
+    <select [ngModel]="size" (ngModelChange)="changeSize($event)">
+      <option [value]="5">5</option>
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+    </select>
+  </div>
+  
+  <div class="page-controls">
+    <span class="nav-btn" (click)="changePage(0)" [class.disabled]="page === 0">&laquo;</span>
+    <span class="nav-btn" (click)="changePage(page - 1)" [class.disabled]="page === 0">&lt;</span>
+    <span class="current-page">Page {{ page + 1 }} of {{ totalPages }}</span>
+    <span class="nav-btn" (click)="changePage(page + 1)" [class.disabled]="page >= totalPages - 1">&gt;</span>
+    <span class="nav-btn" (click)="changePage(totalPages - 1)" [class.disabled]="page >= totalPages - 1">&raquo;</span>
+  </div>
+
+  <div class="view-info">
+    View {{ this.page * this.size + 1 }}-{{ endItem }} of {{ totalElements }}
+  </div>
+</div>
