@@ -1,0 +1,109 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="title-section">
+      <h1>Sets <span class="badge">{{ sets.length }}</span></h1>
+    </div>
+
+    <div class="action-section">
+      <button class="btn-delete" *ngIf="selectedIds.size > 0" (click)="deleteSelected()">
+        Xóa đã chọn ({{ selectedIds.size }})
+      </button>
+      <div class="search-box">
+        <input type="text" placeholder="Search sets..." [(ngModel)]="keyword" (ngModelChange)="searchData()">
+      </div>
+      <button class="btn-filter" (click)="openFilterModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+        Filter
+      </button>
+      <button class="btn-create" routerLink="/cms/sets/create">+ Create</button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="col-check">
+            <input type="checkbox" [checked]="isAllSelected()" (change)="toggleAllSelection()">
+          </th>
+          <th>NAME ⇅</th>
+          <th>DESCRIPTION ⇅</th>
+          <th>CREATED BY ⇅</th>
+          <th>STATUS ⇅</th>
+          <th>UPDATED AT ⇅</th>
+          <th class="col-action">THAO TÁC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let set of sets">
+          <td>
+            <input type="checkbox" [checked]="selectedIds.has(set.id)" (change)="toggleSelection(set.id)">
+          </td>
+          <td><strong>{{ set.name }}</strong></td>
+          <td class="col-desc">{{ set.description }}</td>
+          <td>{{ set.createdByName }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="set.deleted ? 'lock' : 'active'">
+              {{ set.deleted ? 'Lock' : 'Active' }}
+            </span>
+          </td>
+          <td>{{ set.updatedAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+          <td class="col-action">
+            <div class="action-menu" [class.active]="activeDropdownId === set.id">
+              <button class="action-trigger" (click)="toggleDropdown(set.id, $event)">
+                 ...
+              </button>
+              
+              <div class="dropdown-content" *ngIf="activeDropdownId === set.id">
+                <button class="dropdown-item">
+                  XEM CHI TIẾT
+                </button>
+                <button class="dropdown-item" [routerLink]="['/cms/sets/edit', set.id]">
+                  CHỈNH SỬA
+                </button>
+                <div class="divider"></div>
+                <button class="dropdown-item delete" (click)="deleteSet(set.id)">
+                  XÓA
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-pagination
+    [page]="page"
+    [size]="size"
+    [totalPages]="totalPages"
+    [totalElements]="totalElements"
+    (pageChange)="changePage($event)"
+    (sizeChange)="changePageSize($event)">
+  </app-pagination>
+</div>
+
+<!-- Filter Modal -->
+<div class="modal-overlay" *ngIf="showFilterModal" (click)="closeFilterModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Filter</h2>
+      <button class="close-btn" (click)="closeFilterModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>STATUS</label>
+        <div class="select-wrapper">
+          <select [(ngModel)]="tempFilterStatus" class="form-control">
+            <option value="All">All</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-apply" (click)="applyFilter()">Áp dụng</button>
+    </div>
+  </div>
+</div>
