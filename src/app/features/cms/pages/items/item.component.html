@@ -1,0 +1,59 @@
+<div class="page-container">
+    <div class="page-header">
+        <div class="title-section">
+            <h1>Items <span class="badge">{{ totalElements }}</span></h1>
+        </div>
+
+        <div class="action-section">
+            <div class="search-box">
+                <input type="text" placeholder="Search items..." [(ngModel)]="keyword" (ngModelChange)="searchData()">
+            </div>
+            <button class="btn-filter">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                Filter
+            </button>
+            <button class="btn-create" routerLink="/cms/items/create">+ Create</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="col-check">
+                        <input type="checkbox">
+                    </th>
+                    <th>ITEM ⇅</th>
+                    <th>TIER ⇅</th>
+                    <th>SET ⇅</th>
+                    <th>ITEM STATUS ⇅</th>
+                    <th>SET STATUS ⇅</th>
+                    <th>UPDATED AT ⇅</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items">
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                    <td class="item-info">
+                        <img [src]="item.imageUrl" [alt]="item.name" class="item-image">
+            
+                        <span>{{ item.name }}</span>
+                    </td>
+                    <td>{{item.tier}}</td>
+                    <td>{{item.setName}}</td>
+                    <td>{{item.deleted ? 'Lock' : 'Active'}}</td>
+                    <td>{{item.setStatus}}</td>
+                    <td>{{item.updatedAt | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <app-pagination [page]="page" [size]="size" [totalPages]="totalPages" [totalElements]="totalElements"
+        (pageChange)="changePage($event)" (sizeChange)="changePageSize($event)">
+    </app-pagination>
+</div>
