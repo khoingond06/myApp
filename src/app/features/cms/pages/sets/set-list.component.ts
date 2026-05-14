@@ -29,7 +29,7 @@ export class SetListComponent implements OnInit {
   keyword: string = '';
   showFilterModal: boolean = false;
   filterStatus: string = 'All';
-  tempFilterStatus: string = 'All';
+  tempFilterStatus: string = 'All';  // giá trị tạm
 
   activeDropdownId: number | null = null;
 
@@ -126,7 +126,6 @@ export class SetListComponent implements OnInit {
           if (res && res.success === false) {
             alert('Có lỗi xảy ra: ' + (res.message || 'Lỗi khi xóa'));
           } else {
-            // Đổi trạng thái sang Lock (deleted: true) ngay lập tức trên giao diện
             this.sets = this.sets.map(set => 
               idsToDelete.includes(set.id) ? { ...set, deleted: true } : set
             );

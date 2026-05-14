@@ -12,7 +12,6 @@
         <input type="text" placeholder="Search sets..." [(ngModel)]="keyword" (ngModelChange)="searchData()">
       </div>
       <button class="btn-filter" (click)="openFilterModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
         Filter
       </button>
       <button class="btn-create" routerLink="/cms/sets/create">+ Create</button>
@@ -55,7 +54,7 @@
               </button>
               
               <div class="dropdown-content" *ngIf="activeDropdownId === set.id">
-                <button class="dropdown-item">
+                <button class="dropdown-item" [routerLink] ="['/cms/sets/view', set.id]">
                   XEM CHI TIẾT
                 </button>
                 <button class="dropdown-item" [routerLink]="['/cms/sets/edit', set.id]">
