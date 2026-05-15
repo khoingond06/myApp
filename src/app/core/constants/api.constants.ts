@@ -15,6 +15,13 @@ export const API_ENDPOINTS = {
   },
   USER: {
     GET_ALL: `${API_BASE_URL}/users`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/users/${id}`,
+    CREATE: `${API_BASE_URL}/users`,
+    DELETE: (id: number) => `${API_BASE_URL}/users/${id}`,
+    UPDATE: (id: number) => `${API_BASE_URL}/users/${id}`,
+  },
+  ROLE: {
+    GET_ALL: `${API_BASE_URL}/roles`,
   },
   SET: {
     GET_ALL: `${API_BASE_URL}/cms/sets`,

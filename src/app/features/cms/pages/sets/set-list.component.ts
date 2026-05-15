@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CmsService } from '../../services/cms.service';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination.component';
@@ -16,7 +16,6 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
 export class SetListComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private cmsService = inject(CmsService);
-  private router = inject(Router);
   sets: any[] = [];
 
   // pagination
@@ -47,7 +46,7 @@ export class SetListComponent implements OnInit {
     this.getData();
   }
 
-  getData = () => {
+  getData(){
     this.cmsService.getSets(this.page, this.size, this.keyword, this.filterStatus).subscribe((res: any) => {
       const apiData = res.data ? res.data : res;
 
@@ -59,7 +58,7 @@ export class SetListComponent implements OnInit {
     });
   }
 
-  searchData = () => {
+  searchData(){
     this.page = 0;
     this.getData();
   }
@@ -152,11 +151,13 @@ export class SetListComponent implements OnInit {
     if (this.page < 0) this.page = 0;
 
     this.getData();
+    this.cdr.markForCheck();
   }
 
   changePageSize = (pageSize: number) => {
     this.size = pageSize;
     this.page = 0;
     this.getData();
+    this.cdr.markForCheck();
   }
 }

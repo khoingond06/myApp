@@ -1,0 +1,77 @@
+<div>
+    <div>
+        <div>
+            <h1>Users {{users.length}}</h1>
+        </div>
+        <div>
+            <input type="text" placeholder="Search users..."  [(ngModel)]="keyword" (ngModelChange)="searchData()">
+            <button class="btn-filter" (click)="openFilterModal()">Filter</button>
+            <button class="btn-create" routerLink="/cms/users/create">+ Create</button>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                        <th>ROLE</th>
+                        <th>STATUS</th>
+                        <th>UPDATE BY</th>
+                        <th>UPDATE AT</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.roleName }}</td>
+                        <td>{{ user.enabled }}</td>
+                        <td>{{ user.updatedBy }}</td>
+                        <td>{{ user.updatedAt }}</td>
+                        <td>
+                            <div>
+                                <button (click)="toggleDropdown(user.id, $event)"> --- </button>
+                            </div>
+                            <div *ngIf="activeDropdownId === user.id">
+                                <button [routerLink] ="['/cms/users/view', user.id]">
+                                    VIEW
+                                </button>
+                                <button [routerLink] ="['/cms/users/edit', user.id]">
+                                    EDIT
+                                </button>
+                                <button (click)="deleteUser(user.id)">
+                                    DELETE
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <app-pagination
+            [page]="page"
+            [size]="size"
+            [totalPages]="totalPages"
+            [totalElements]="totalElements"
+            (pageChange)="changePage($event)"
+            (sizeChange)="changePageSize($event)">
+        </app-pagination>
+    </div>
+    <div *ngIf="showFilterModal">
+        <div>
+            STATUS
+            <select [(ngModel)]="tempFilterStatus">
+                <option value="All">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        </div>
+        <div>
+            <button (click)="applyFilter()">Apply</button>
+            <button (click)="closeFilterModal()">Cancel</button>
+        </div>
+    </div>
+</div>

@@ -65,6 +65,22 @@ export const routes: Routes = [
       {
         path: 'items/create',
         loadComponent: () => import('./features/cms/pages/items/item-create/item-create.component').then(m => m.ItemCreateComponent)
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('./features/cms/pages/users/user.component').then(m => m.UserComponent)
+      },
+      {
+        path: 'users/view/:id',
+        loadComponent: () => import('./features/cms/pages/users/user-view/user-view.component').then(m => m.UserViewComponent)
+      },
+      {
+        path: 'users/create',
+        loadComponent: () => import('./features/cms/pages/users/user-create/user-create.component').then(m => m.UserCreateComponent)
+      },
+      {
+        path: 'users/edit/:id',
+        loadComponent: () => import('./features/cms/pages/users/user-edit/user-edit.component').then(m => m.UserEditComponent)
       }
     ]
   }

@@ -1,0 +1,20 @@
+<div>
+    <div>
+        <div>
+            <h1>Chi tiết người dùng</h1>
+            <p>Quản lý và xem thông tin hồ sơ của ID: {{userId}}</p>
+        </div>
+        <div>
+            <div><strong>Username:</strong> {{user.username}}</div>
+            <div><strong>Email:</strong> {{user.email}}</div>
+            <div><strong>Role:</strong> {{user.roleName}}</div>
+            <div><strong>Status:</strong> {{user.enabled ? 'Active' : 'Inactive'}}</div>
+            <div><strong>Updated By:</strong> {{user.updatedBy}}</div>
+            <div><strong>Updated At:</strong> {{user.updatedAt }}</div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!user">
+    <p>Đang tải thông tin người dùng...</p>
+</div>
