@@ -67,6 +67,18 @@ export const routes: Routes = [
         loadComponent: () => import('./features/cms/pages/items/item-create/item-create.component').then(m => m.ItemCreateComponent)
       },
       {
+        path: 'items/view/:id',
+        loadComponent: () => import('./features/cms/pages/items/item-view/item-view.component').then(m => m.ItemViewComponent)
+      },
+      {
+        path: 'teams',
+        loadComponent: () => import('./features/cms/pages/teams/team.component').then(m => m.TeamComponent)
+      },
+      {
+        path: 'teams/create',
+        loadComponent: () => import('./features/cms/pages/teams/team-create/team-create.component').then(m => m.TeamCreateComponent)
+      },
+      {
         path: 'users',
         loadComponent: () => import('./features/cms/pages/users/user.component').then(m => m.UserComponent)
       },
@@ -81,7 +93,19 @@ export const routes: Routes = [
       {
         path: 'users/edit/:id',
         loadComponent: () => import('./features/cms/pages/users/user-edit/user-edit.component').then(m => m.UserEditComponent)
-      }
+      },
+      {
+        path: 'notification',
+        loadComponent: () => import('./features/cms/pages/notification/notification.component').then(m => m.NotificationComponent)
+      },
+      {
+        path: 'role',
+        loadComponent: () => import('./features/cms/pages/role/role.component').then(m => m.RoleComponent)
+      },
+      {
+        path: 'role/create',
+        loadComponent: () => import('./features/cms/pages/role/role-create/role-create').then(m => m.RoleCreate)
+      },
     ]
   }
 ];

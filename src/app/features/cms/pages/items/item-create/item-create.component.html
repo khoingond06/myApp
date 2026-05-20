@@ -24,6 +24,7 @@
                         <div class="form-group">
                             <label for="name">Item Name <span class="required">*</span></label>
                             <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter item name">
+                            <app-form-error [control]="createForm.get('name')"></app-form-error>
                         </div>
 
                         <div class="form-row">
@@ -33,6 +34,7 @@
                                     <option value="" disabled selected>Select tier</option>
                                     <option *ngFor="let tier of tiers" [value]="tier">{{tier}}</option>
                                 </select>
+                                <app-form-error [control]="createForm.get('tier')"></app-form-error>
                             </div>
 
                             <div class="form-group half">
@@ -41,6 +43,7 @@
                                     <option value="" disabled selected>Select set</option>
                                     <option *ngFor="let set of sets" [value]="set.id">{{set.name}}</option>
                                 </select>
+                                <app-form-error [control]="createForm.get('setId')"></app-form-error>
                             </div>
                         </div>
                     </div>
@@ -67,6 +70,7 @@
                                 <button type="button" class="btn-upload">Tải ảnh lên</button>
                                 <p class="helper-text">Định dạng hỗ trợ: JPG, PNG, GIF. Hoặc bạn nhập trực tiếp URL ảnh dưới đây.</p>
                                 <input type="text" formControlName="imageUrl" class="form-control" placeholder="Dán URL ảnh hoặc Base64 vào đây...">
+                                <app-form-error [control]="createForm.get('imageUrl')"></app-form-error>
                             </div>
                         </div>
                     </div>
@@ -82,26 +86,32 @@
                             <div class="form-group">
                                 <label>AD (ATTACK DAMAGE)</label>
                                 <input type="number" formControlName="attackDamage" class="form-control">
+                                <app-form-error [control]="createForm.get('stats.attackDamage')"></app-form-error>
                             </div>
                             <div class="form-group">
                                 <label>AP (ABILITY POWER)</label>
                                 <input type="number" formControlName="abilityPower" class="form-control">
+                                <app-form-error [control]="createForm.get('stats.abilityPower')"></app-form-error>
                             </div>
                             <div class="form-group">
                                 <label>ARMOR</label>
                                 <input type="number" formControlName="armor" class="form-control">
+                                <app-form-error [control]="createForm.get('stats.armor')"></app-form-error>
                             </div>
                             <div class="form-group">
                                 <label>MR (MAGIC RESIST)</label>
                                 <input type="number" formControlName="magicResist" class="form-control">
+                                <app-form-error [control]="createForm.get('stats.magicResist')"></app-form-error>
                             </div>
                             <div class="form-group">
                                 <label>AS (ATTACK SPEED)</label>
                                 <input type="number" formControlName="attackSpeed" class="form-control" step="0.01">
+                                <app-form-error [control]="createForm.get('stats.attackSpeed')"></app-form-error>
                             </div>
                             <div class="form-group">
                                 <label>HEALTH</label>
                                 <input type="number" formControlName="health" class="form-control">
+                                <app-form-error [control]="createForm.get('stats.health')"></app-form-error>
                             </div>
                         </div>
                     </div>
@@ -137,9 +147,7 @@
 
                     <div class="form-actions-panel">
                         <button type="button" class="btn-cancel" (click)="goBack()">Hủy</button>
-                        <button type="submit" class="btn-save" [disabled]="createForm.invalid || isSubmitting">
-                            <span *ngIf="!isSubmitting">Lưu vật phẩm</span>
-                            <span *ngIf="isSubmitting">Đang lưu...</span>
+                        <button type="submit" class="btn-save" >Lưu
                         </button>
                     </div>
                 </div>

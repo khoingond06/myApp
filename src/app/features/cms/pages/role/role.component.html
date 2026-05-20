@@ -1,0 +1,51 @@
+<div style="display: flex; gap: 20px; padding: 20px;">
+    <!-- CỘT TRÁI: Danh sách Roles -->
+    <div style="width: 250px;">
+        <div>
+        <div>
+            <div>
+                <h2>Danh sách Roles <span> <button [routerLink]="['/cms/role/create']">+</button></span></h2>
+            </div>
+            <div>
+                <div *ngFor="let item of listRole" (click)="selectRole(item)">
+                    <p>{{item.name}}</p>
+                    <p>CODE: {{item.code}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="flex: 1; padding: 20px; position: relative;">
+        <!-- Đổi tiêu đề động theo Role đang chọn -->
+        <h2 *ngIf="selectedRole">Phân quyền: {{ selectedRole.name }}</h2>
+        <p>Chọn các quyền truy cập cho role này.</p>
+        <button (click)="deleteRole()">Xóa</button>
+        <button>Cập nhật</button>
+        <!-- Nút lưu thay đổi -->
+        <button 
+            *ngIf="selectedRole"
+            (click)="saveRole()">
+            Lưu thay đổi
+        </button>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th style="padding: 15px 5px;">Entity</th>
+                    <th style="padding: 15px 5px;">READ</th>
+                    <th style="padding: 15px 5px;">CREATE</th>
+                    <th style="padding: 15px 5px;">UPDATE</th>
+                    <th style="padding: 15px 5px;">DELETE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let entity of entities" style="border-bottom: 1px solid #f0f0f0;">
+                    <td style="padding: 15px 5px;">{{ entity }}</td>
+                    <td><input type="checkbox" [checked]="hasPermission(entity, 'READ')" (change)="togglePermission(entity, 'READ', $event)"></td>
+                    <td><input type="checkbox" [checked]="hasPermission(entity, 'CREATE')" (change)="togglePermission(entity, 'CREATE', $event)"></td>
+                    <td><input type="checkbox" [checked]="hasPermission(entity, 'UPDATE')" (change)="togglePermission(entity, 'UPDATE', $event)"></td>
+                    <td><input type="checkbox" [checked]="hasPermission(entity, 'DELETE')" (change)="togglePermission(entity, 'DELETE', $event)"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

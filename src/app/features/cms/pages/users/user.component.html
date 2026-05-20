@@ -1,37 +1,46 @@
-<div>
-    <div>
-        <div>
-            <h1>Users {{users.length}}</h1>
+<div class="page-container">
+    <div class="page-header">
+        <div class="title-section">
+            <h1>Users<span>{{users.length}}</span></h1>
         </div>
-        <div>
+        <div class="action-section">
             <input type="text" placeholder="Search users..."  [(ngModel)]="keyword" (ngModelChange)="searchData()">
             <button class="btn-filter" (click)="openFilterModal()">Filter</button>
+            <button class="btn-delete" *ngIf="selectedIds.size > 0" (click)="deleteSelected()">
+                Xóa đã chọn ({{ selectedIds.size }})
+            </button>
             <button class="btn-create" routerLink="/cms/users/create">+ Create</button>
         </div>
-        <div>
+        <div class="action-table">
             <table>
                 <thead>
                     <tr>
-                        <th></th>
-                        <th>NAME</th>
-                        <th>EMAIL</th>
-                        <th>ROLE</th>
-                        <th>STATUS</th>
-                        <th>UPDATE BY</th>
-                        <th>UPDATE AT</th>
-                        <th>ACTION</th>
+                        <th class="col-check">
+                            <input type="checkbox" [checked]="isAllSelected()" (change)="toggleAllSelection()">
+                        </th>
+                        <th class="col-check">USERNAME</th>
+                        <th class="col-check">EMAIL</th>
+                        <th class="col-check">ROLE</th>
+                        <th class="col-check">STATUS</th>
+                        <th class="col-check">UPDATE BY</th>
+                        <th class="col-check">UPDATE AT</th>
+                        <th class="col-action">ACTION</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let user of users">
+                        <td style="text-align: center;width: 5%;">
+                            <input type="checkbox" [checked]="selectedIds.has(user.id)" (change)="toggleSelection(user.id)">
+                        </td>
                         <td>{{ user.username }}</td>
-                        <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.roleName }}</td>
-                        <td>{{ user.enabled }}</td>
-                        <td>{{ user.updatedBy }}</td>
-                        <td>{{ user.updatedAt }}</td>
-                        <td>
+                        <td><span class="status-badge" [ngClass]="user.enabled ? 'active' : 'lock'">
+                                {{ user.enabled ? 'Active' : 'Lock' }}
+                            </span></td>
+                        <td>{{ user.updatedBy | date:'yyyy/MM/dd HH:mm'  }}</td>
+                        <td>{{ user.updatedAt | date:'yyyy/MM/dd HH:mm' }}</td>
+                        <td style="text-align: center;width: 5%;">
                             <div>
                                 <button (click)="toggleDropdown(user.id, $event)"> --- </button>
                             </div>
@@ -59,19 +68,34 @@
             (pageChange)="changePage($event)"
             (sizeChange)="changePageSize($event)">
         </app-pagination>
-    </div>
-    <div *ngIf="showFilterModal">
-        <div>
-            STATUS
-            <select [(ngModel)]="tempFilterStatus">
-                <option value="All">All</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-            </select>
+    </div>  
+    <div *ngIf="showFilterModal" class="modal">
+        <h1>Filter</h1>
+        <div class="modal-button">
+            <div>
+                STATUS
+                <select [(ngModel)]="tempFilterStatus">
+                    <option value="All">All</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+            <div>
+                <div>ROLE</div>
+                <div>
+                    <select [(ngModel)]="tempFilterRole">
+                        <option value="All">All</option>
+                        <option *ngFor="let role of roles" [value]="role.id">{{ role.code }}</option>
+                    </select>
+                </div>
+            </div>
         </div>
-        <div>
-            <button (click)="applyFilter()">Apply</button>
+        <div class="modal-footer">
             <button (click)="closeFilterModal()">Cancel</button>
+            <div class="modal-footer_right"> 
+                <button (click)="applyFilter()">Apply</button>
+                <button (click)="applyFilter()">Reset</button>
+            </div>
         </div>
     </div>
 </div>

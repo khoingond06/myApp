@@ -9,10 +9,12 @@
                     <div>
                         <label>Username</label>
                         <input type="text" formControlName="username">
+                        <app-form-error [control]="createForm.get('username')"></app-form-error>
                     </div>
                     <div>
                         <label>Email</label>
                         <input type="email" formControlName="email">
+                        <app-form-error [control]="createForm.get('email')"></app-form-error>
                     </div>
                     <div>
                         <label>Role</label>
@@ -22,10 +24,12 @@
                                 {{role.name || role.code}}
                             </option>
                         </select>
+                        <app-form-error [control]="createForm.get('roleId')"></app-form-error>
                     </div>
                     <div>
                         <label>Password</label>
                         <input type="password" formControlName="defaultPassword">
+                        <app-form-error [control]="createForm.get('defaultPassword')"></app-form-error>
                     </div>
                     <div>
                         <button type="submit">Create</button>

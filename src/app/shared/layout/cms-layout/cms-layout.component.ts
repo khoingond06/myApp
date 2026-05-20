@@ -47,6 +47,7 @@ export class CmsLayoutComponent {
     if (url.includes('/cms/champions')) return 'champions';
     if (url.includes('/cms/teams')) return 'teams';
     if (url.includes('/cms/users')) return 'users';
+    if (url.includes('/cms/notification')) return 'notification';
     return 'Cms';
   }
 

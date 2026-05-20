@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-view.component',
@@ -12,6 +12,7 @@ export class UserViewComponent {
   private userService = inject(UserService);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
   userId: number | null = null;
   user: any = null;
 
@@ -30,5 +31,8 @@ export class UserViewComponent {
       this.user = data;
       this.cdr.markForCheck();
     })
+  }
+  goBack(){
+    this.router.navigate(['/cms/users']);
   }
 }

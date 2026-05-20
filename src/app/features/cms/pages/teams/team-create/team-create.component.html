@@ -1,0 +1,44 @@
+<div>
+    <div>
+        <h1>Create Team Composition</h1>
+        <p>Build a sample team composition for users to reference.</p>
+    </div>
+    <div>
+        <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+
+            <label>Set</label>
+            <select id="setId" formControlName="setId">
+                <option value="">-- Chọn Set --</option>
+                <option *ngFor="let set of sets" [value]="set.id">{{set.name}}</option>
+            </select>
+
+            <label>Tier</label>
+            <select id="tier" formControlName="tier">
+                <option *ngFor="let tier of tiers" [value]="tier">{{tier}}</option>
+            </select>
+
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName="name">
+
+            <label>Style</label>
+            <select id="style" formControlName="style">
+                <option *ngFor="let style of styles" [value]="style">{{style}}</option>
+            </select>
+
+            <div>
+                <label>Champions</label>
+                <div *ngIf="champions.length === 0">No champions available for this set</div>
+                <label *ngFor="let champion of champions">
+                    <input
+                        type="checkbox"
+                        [checked]="isSelected(champion.id)"
+                        (change)="toggleChampion(champion.id, $any($event.target).checked)"
+                    >
+                    {{ champion.name }}
+                </label>
+            </div>
+
+            <button type="submit">Create</button>
+        </form>
+    </div>
+</div>

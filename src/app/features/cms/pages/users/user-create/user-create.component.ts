@@ -4,10 +4,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { RoleService } from '../../../services/role.service';
+import { FormErrorComponent } from '../../../../../shared/components/form-error/form-error.component';
 
 @Component({
   selector: 'app-user-create.component',
-  imports: [ReactiveFormsModule,CommonModule ],
+  imports: [ReactiveFormsModule, CommonModule, FormErrorComponent],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -62,7 +63,7 @@ export class UserCreateComponent {
 
   onSubmit() {
     if (this.createForm.invalid) {
-      alert('Vui lòng điền đầy đủ thông tin và mật khẩu ít nhất 8 ký tự!');
+      alert('Vui lòng điền đầy đủ thông tin');
       return;
     }
 

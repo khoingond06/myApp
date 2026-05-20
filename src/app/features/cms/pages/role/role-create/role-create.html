@@ -1,0 +1,25 @@
+<div>
+    <div>
+        <h1>Thêm vai trò mới</h1>
+        <p>Định nghĩa quyền hạn cho các nhóm người dùng</p>
+    </div>
+    <div>
+        <form [formGroup]="createForm" (ngSubmit)="createRole()">
+            <div>
+                <label for="name">Mã vai trò</label>
+                <input type="text" id="name" formControlName="code">
+            </div>
+            <div>
+                <label for="code">Tên vai trò</label>
+                <input type="text" id="code" formControlName="name">
+            </div>
+            <div>
+                <label for="description">Mô tả</label>
+                <input type="text" id="description" formControlName="description">
+            </div>
+            <div>
+                <button type="submit">Tạo vai trò</button>
+            </div>
+        </form>
+    </div>
+</div>

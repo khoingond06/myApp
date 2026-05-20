@@ -1,0 +1,42 @@
+<div>
+    <div>
+        <h1>Thông báo</h1>
+    </div>
+    <div style="display: flex;justify-content: space-between;gap:5px; width: 100%;">
+        <div style="display: flex;flex-direction: column; width: 50%;">
+            <h1>Tạo thông báo mới</h1>
+            <div>
+                <form [formGroup]="createNotiForm" (ngSubmit)="sendNoti()">
+                    <label>Tiêu đề</label><br>
+                    <input type="text" placeholder="Nhập tiêu đề" formControlName="title">
+                    <app-form-error [control]="createNotiForm.get('title')"></app-form-error>
+                    <br>
+                    <label>Nội dung</label><br>
+                    <input type="text" placeholder="Nhập nội dung" formControlName="content">
+                    <app-form-error [control]="createNotiForm.get('content')"></app-form-error>
+                    <br>
+                    <button type="submit">Gửi thông báo</button>
+                </form>
+            </div>
+        </div>
+        <div style="display: flex;flex-direction: column; width: 50%;">
+            <h1>Lịch sử thông báo</h1>
+            <div *ngFor="let item of noti">
+                <div>
+                    <label>Tiêu đề {{item.title}}</label>
+                </div>
+                <div>
+                    <label>Nội dung {{item.content}}</label>
+                </div>
+                <div>
+                    <label>Ngày tạo {{item.createdAt}}</label>
+                </div>
+                <div>
+                    <label>Trạng thái {{item.targetType}}</label>
+                </div>
+                <div> ---- </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,128 @@
+<div>
+    <h1>Team Comps</h1>
+    <div>
+        <button *ngIf="selectedIds.size > 0" (click)="deleteSelected()">
+            Xóa đã chọn ({{selectedIds.size}})
+        </button>
+        <div>
+            <input type="text" placeholder="search" [(ngModel)]="keyword" (ngModelChange)="searchData()">
+        </div>
+        <button (click)="openFilterModal()">filter</button>
+        <button routerLink="create">create</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td>
+                    <input type="checkbox" [checked]="isAllSelected()" (change)="toggleAllSelection()">
+                </td>
+                <td>NAME</td>
+                <td>
+                    TIER
+                </td>
+                <td>
+                    STYLE
+                </td>
+                <td>
+                    STATUS
+                </td>
+                <td>
+                    CHAMPIONS
+                </td>
+                <td>
+                    SETS
+                </td>
+                <td>
+                    ACTION
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let team of team">
+                <td>
+                    <input type="checkbox" [checked]="selectedIds.has(team.id)" (change)="toggleSelection(team.id)">
+                </td>
+                <td>{{team.name}}</td>
+                <td>
+                    {{team.tier}}
+                </td>
+                <td>
+                    {{team.style}}
+                </td>
+                <td>
+                    {{team.deleted ? 'Inactive' : 'Active'}}
+                </td>
+                <td>
+                    <img *ngFor="let champion of team.champions" [src]="champion.avatarUrl" alt="" width="40" height="40" style="margin-right: 5px; border-radius: 4px;">
+                </td>
+                <td>
+                    {{team.set?.name}}
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <app-pagination
+     [page]="page"
+     [size]="size"
+     [totalPages]="totalPages"
+     [totalElements]="totalElements"
+     (pageChange)="changePage($event)"
+     (sizeChange)="changePageSize($event)"
+    >
+    </app-pagination>
+</div>
+
+<!-- Filter Modal -->
+<div *ngIf="showFilterModal">
+    <div>
+        <h1>Filter</h1>
+    </div>
+    <div>
+        <div>
+            <label>Set</label>
+            <select [(ngModel)]="filterset">
+                <option value="">All</option>
+                <option *ngFor="let set of sets" [value]="set.id">{{set.name}}</option>
+            </select>
+
+            <label>Style</label>
+            <div>
+                <label><input type="checkbox" value="FAST8" (change)="onCheckboxChange($event)"> FAST8</label>
+                <label><input type="checkbox" value="SLOW-ROLL" (change)="onCheckboxChange($event)"> SLOW-ROLL</label>
+                <label><input type="checkbox" value="STANDARD" (change)="onCheckboxChange($event)"> STANDARD</label>
+                <label><input type="checkbox" value="EMBLEM" (change)="onCheckboxChange($event)"> EMBLEM</label>
+                <label><input type="checkbox" value="AUGMENT" (change)="onCheckboxChange($event)"> AUGMENT</label>
+                <label><input type="checkbox" value="FAST9" (change)="onCheckboxChange($event)"> FAST9</label>
+            </div>
+
+            <label>TIER</label>
+            <div>
+                <label><input type="checkbox" value="S" (change) = "onchecktier($event)"> S</label>
+                <label><input type="checkbox" value="A" (change) = "onchecktier($event)"> A</label>
+                <label><input type="checkbox" value="B" (change) = "onchecktier($event)"> B</label>
+                <label><input type="checkbox" value="C" (change) = "onchecktier($event)"> C</label>
+                <label><input type="checkbox" value="D" (change) = "onchecktier($event)"> D</label>
+            </div>
+            
+            <label>TEAM COMP STATUS</label>
+            <select [(ngModel)] = "tempFilterStatus">
+                <option value="All">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+            
+            <label>SET STATUS</label>
+            <select [(ngModel)] = "tempFilterCompStatus">
+                <option value="All">All</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+        <div>
+            <button (click)="applyFilter()">apply filter</button>
+        </div>
+        </div>
+    </div>
+</div>

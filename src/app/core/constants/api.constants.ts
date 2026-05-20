@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   },
   NOTIFICATION: {
     GET_ALL: `${API_BASE_URL}/notifications`,
+    CREATE: `${API_BASE_URL}/notifications/test`,
   },
   MY_INFO: {
     GET_ALL: `${API_BASE_URL}/chat/conversations`,
@@ -22,6 +23,18 @@ export const API_ENDPOINTS = {
   },
   ROLE: {
     GET_ALL: `${API_BASE_URL}/roles`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/roles/${id}`,
+    CREATE: `${API_BASE_URL}/roles`,
+    DELETE: (id: number) => `${API_BASE_URL}/roles/${id}`,
+    UPDATE: (id: number) => `${API_BASE_URL}/roles/${id}`,
+    UPDATE_PERMISSIONS: (id: number) => `${API_BASE_URL}/roles/${id}/permissions`,
+  },
+  PERMISSIONS:{
+    GET_ALL: `${API_BASE_URL}/permissions`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/permissions/${id}`,
+    CREATE: `${API_BASE_URL}/permissions`,
+    DELETE: (id: number) => `${API_BASE_URL}/permissions/${id}`,
+    UPDATE: (id: number) => `${API_BASE_URL}/permissions/${id}`,
   },
   SET: {
     GET_ALL: `${API_BASE_URL}/cms/sets`,
@@ -32,11 +45,19 @@ export const API_ENDPOINTS = {
   },
   ITEMS: {
     GET_ALL: `${API_BASE_URL}/cms/items`,
+    FIND_BY_ID: (id: number) => `${API_BASE_URL}/cms/items/${id}`,
     CREATE: `${API_BASE_URL}/cms/items`,
     SEARCH: (name: string) => `${API_BASE_URL}/cms/items?name=${name}`,
     DELETE: (id: number) => `${API_BASE_URL}/cms/items/${id}`,  
   },
   TEAM_COMPS: {
     GET_ALL: `${API_BASE_URL}/cms/team-comp`,
+    CREATE: `${API_BASE_URL}/cms/team-comp`,
+    DELETE: (id: number) => `${API_BASE_URL}/cms/team-comp/${id}`,
   },
+  CHAMPION: {
+    GET_ALL: `${API_BASE_URL}/cms/champions`,
+    GET_BY_SET: (setId: number) => `${API_BASE_URL}/champs/set/${setId}`,
+  },
+  
 } as const;

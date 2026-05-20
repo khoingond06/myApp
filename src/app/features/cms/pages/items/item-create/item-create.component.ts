@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { ItemService } from '../../../services/item.service';
 import { CmsService } from '../../../services/cms.service';
+import { FormErrorComponent } from '../../../../../shared/components/form-error/form-error.component';
 
 @Component({
   selector: 'app-item-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,FormErrorComponent],
   templateUrl: './item-create.component.html',
   styleUrl: './item-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -27,7 +28,7 @@ export class ItemCreateComponent implements OnInit {
   createForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(255)]],
     setId: ['', [Validators.required]],
-    tier: [''],
+    tier: ['', [Validators.required]],
     imageUrl: [''],
     stats: this.fb.group({
       attackDamage: [0],
@@ -60,7 +61,11 @@ export class ItemCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.createForm.invalid || this.isSubmitting) return;
+    if (this.createForm.invalid) {
+      alert('Vui lòng điền đầy đủ thông tin');
+      this.createForm.markAllAsTouched();
+      return; 
+    }
 
     const formData = {
       ...this.createForm.value,

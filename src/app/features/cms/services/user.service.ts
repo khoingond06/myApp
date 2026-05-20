@@ -7,7 +7,7 @@ import { API_ENDPOINTS } from '../../../core/constants/api.constants';
 })
 export class UserService {
   private http = inject(HttpClient);
-  getUsers(page: number, size: number, keyword: string, status: string) {
+  getUsers(page: number, size: number, keyword: string, status: string, role: string) {
     let url = `${API_ENDPOINTS.USER.GET_ALL}?page=${page}&size=${size}`;
     if (keyword) {
       url += `&keyword=${keyword}`;
@@ -16,6 +16,9 @@ export class UserService {
       url += `&enabled=true`;
     } else if (status === 'Inactive') {
       url += `&enabled=false`;
+    }
+    if (role !== 'All') {
+      url += `&roleId=${role}`;
     }
     return this.http.get(url);
   }
@@ -28,6 +31,9 @@ export class UserService {
   }
   deleteUser(id: number) {
     return this.http.delete(API_ENDPOINTS.USER.DELETE(id));
+  }
+  deleteUsers(ids: number[]) {
+    return this.http.delete(API_ENDPOINTS.USER.GET_ALL, { body: { ids: ids } });
   }
   updateUser(id: number, data: any) {
     return this.http.put(API_ENDPOINTS.USER.UPDATE(id), data);

@@ -5,14 +5,13 @@
         </div>
 
         <div class="action-section">
+            <button class="btn-delete" *ngIf="selectedIds.size > 0" (click)="deleteSelected()">
+                Xóa đã chọn ({{ selectedIds.size }})
+            </button>
             <div class="search-box">
                 <input type="text" placeholder="Search items..." [(ngModel)]="keyword" (ngModelChange)="searchData()">
             </div>
-            <button class="btn-filter">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                </svg>
+            <button class="btn-filter" (click)="openfiltermodal()">
                 Filter
             </button>
             <button class="btn-create" routerLink="/cms/items/create">+ Create</button>
@@ -24,7 +23,7 @@
             <thead>
                 <tr>
                     <th class="col-check">
-                        <input type="checkbox">
+                        <input type="checkbox" [checked]="isAllSelected()" (change)="toggleAllSelection()">
                     </th>
                     <th>ITEM ⇅</th>
                     <th>TIER ⇅</th>
@@ -37,11 +36,11 @@
             <tbody>
                 <tr *ngFor="let item of items">
                     <td>
-                        <input type="checkbox">
+                        <input type="checkbox" [checked]="selectedIds.has(item.id)" (change)="toggleSelection(item.id)">
                     </td>
                     <td class="item-info">
                         <img [src]="item.imageUrl" [alt]="item.name" class="item-image">
-            
+
                         <span>{{ item.name }}</span>
                     </td>
                     <td>{{item.tier}}</td>
@@ -49,6 +48,22 @@
                     <td>{{item.deleted ? 'Lock' : 'Active'}}</td>
                     <td>{{item.setStatus}}</td>
                     <td>{{item.updatedAt | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+                    <td>
+                        <div>
+                            <button (click)="toggleDropdown(item.id, $event)"> --- </button>
+                        </div>
+                        <div *ngIf="activeDropdownId === item.id" style="display: flex; flex-direction: column;">
+                            <button [routerLink]="['/cms/items/view', item.id]">
+                                VIEW
+                            </button>
+                            <button [routerLink]="['/cms/items/edit', item.id]">
+                                EDIT
+                            </button>
+                            <button (click)="deleteItem(item.id)">
+                                DELETE
+                            </button>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -56,4 +71,50 @@
     <app-pagination [page]="page" [size]="size" [totalPages]="totalPages" [totalElements]="totalElements"
         (pageChange)="changePage($event)" (sizeChange)="changePageSize($event)">
     </app-pagination>
+
+    <div *ngIf="showFilterModal">
+        <div>
+            <h1>filter</h1>
+        </div>
+        <div>
+            <div>
+                <label>Mùa giải</label>
+                <select  [(ngModel)] = "filterset">
+                    <option value="">All</option>
+                    <option *ngFor="let item of sets" [value]="item.id">{{item.name}}</option>
+                </select>
+            </div>
+            <div>
+                <label>Tier</label>
+                <select [(ngModel)]="filterTier">
+                    <option value="">All</option>
+                    <option value="S">S</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+            <div>
+                <label>Item Status</label>
+                <select [(ngModel)]="filterItemStatus">
+                    <option value="">All</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+            <div>
+                <label>Set Status</label>
+                <select [(ngModel)]="filterSetStatus">
+                    <option value="">All</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <button (click) = "applyFilter()">Filter</button>
+            <button (click) = "resetFilter()">Reset</button>
+        </div>
+    </div>
 </div>

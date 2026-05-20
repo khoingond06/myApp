@@ -28,6 +28,10 @@ export class CmsService {
     return this.http.get(API_ENDPOINTS.SET.GET_BY_ID(id));
   }
 
+  getChampionsBySetId(setId: number) {
+    return this.http.get(API_ENDPOINTS.CHAMPION.GET_BY_SET(setId));
+  }
+
   updateSet(id: number, data: any) {
     return this.http.put(API_ENDPOINTS.SET.UPDATE(id), data);
   }
