@@ -70,6 +70,10 @@ export class ItemComponent {
     this.showFilterModal = true;
     this.cdr.markForCheck();
   }
+  closefiltermodal(){
+    this.showFilterModal = false;
+    this.cdr.markForCheck();
+  }
 
   applyFilter() {
     this.filterset;

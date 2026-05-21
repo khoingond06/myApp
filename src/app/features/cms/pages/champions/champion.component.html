@@ -1,0 +1,204 @@
+<div class="page-container">
+    <div class="page-header">
+        <div class="title-section">
+            <h1>Champions <span class="badge">{{ totalElements }}</span></h1>
+        </div>
+
+        <div class="action-section">
+            <button class="btn-delete" *ngIf="selectedIds.size > 0" (click)="deleteSelected()">
+                Xóa đã chọn ({{ selectedIds.size }})
+            </button>
+            <div class="search-box">
+                <input type="text" placeholder="Search champions..." [(ngModel)]="keyword"
+                    (ngModelChange)="searchData()">
+            </div>
+            <button class="btn-filter" (click)="openFilterModal()">
+                Filter
+            </button>
+            <button class="btn-create" routerLink="/cms/champions/create">+ Create</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="col-check">
+                        <input type="checkbox" [checked]="isAllSelected()" (change)="toggleAllSelection()">
+                    </th>
+                    <th>CHAMPIONS ⇅</th>
+                    <th>COST ⇅</th>
+                    <th>SET ⇅</th>
+                    <th>SET STATUS</th>
+                    <th>TRAITS</th>
+                    <th>TYPE</th>
+                    <th>STATUS ⇅</th>
+                    <th>UPDATED AT ⇅</th>
+                    <th class="col-action">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let champ of champions">
+                    <td>
+                        <input type="checkbox" [checked]="selectedIds.has(champ.id)"
+                            (change)="toggleSelection(champ.id)">
+                    </td>
+                    <td class="champ-info">
+                        <div class="champ-name-block">
+                            <strong>{{ champ.name }}</strong>
+                            <span class="champ-code">{{ champ.code }}</span>
+                        </div>
+                    </td>
+                    <td>{{ champ.cost }}</td>
+                    <td>{{ champ.setsName }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="champ.setDeleted ? 'lock' : 'active'">
+                            {{ champ.setDeleted ? 'Set inactive' : 'Set active' }}
+                        </span>
+                    </td>
+                    <td class="traits-cell">
+                        <span class="type-badge" *ngFor="let trait of champ.traits">
+                            {{ trait.name }}
+                        </span>
+                        <span *ngIf="!champ.traits || champ.traits.length === 0">-</span>
+                    </td>
+                    <td class="type-cell" [ngClass]="champ.type?.toLowerCase()">
+                        <span class="type-badge">{{ champ.type }}</span>
+                        <span *ngIf="!champ.traits || champ.traits.length === 0">-</span>
+                    </td>
+                    <td>
+                        <span class="status-badge" [ngClass]="champ.deleted ? 'lock' : 'active'">
+                            {{ champ.deleted ? 'Inactive' : 'Active' }}
+                        </span>
+                    </td>
+                    <td>{{ champ.updatedAt | date:'yyyy/MM/dd HH:mm' }}</td>
+                    <td class="col-action">
+                        <div class="action-menu">
+                            <button class="action-trigger" (click)="toggleDropdown(champ.id, $event)">
+                                ⋮
+                            </button>
+                            <div class="dropdown-content" *ngIf="activeDropdownId === champ.id">
+                                <button class="dropdown-item" [routerLink]="['/cms/champions/view', champ.id]">
+                                    XEM CHI TIẾT
+                                </button>
+                                <button class="dropdown-item" [routerLink]="['/cms/champions/edit', champ.id]">
+                                    CHỈNH SỬA
+                                </button>
+                                <div class="divider"></div>
+                                <button class="dropdown-item delete" (click)="deleteChampion(champ.id)">
+                                    XÓA
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <app-pagination [page]="page" [size]="size" [totalPages]="totalPages" [totalElements]="totalElements"
+        (pageChange)="changePage($event)" (sizeChange)="changePageSize($event)">
+    </app-pagination>
+
+    <!-- Filter Modal -->
+    <div class="modal-overlay" *ngIf="showFilterModal" (click)="closeFilterModal()">
+        <div class="modal-filter" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Filter</h2>
+                <button class="close-btn" (click)="closeFilterModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- COST -->
+                <div class="filter-group">
+                    <label class="filter-label">COST</label>
+                    <div class="cost-chips">
+                        <button class="cost-chip" [class.selected]="tempFilterCost === '1'" (click)="selectCost('1')">1 Gold</button>
+                        <button class="cost-chip" [class.selected]="tempFilterCost === '2'" (click)="selectCost('2')">2 Gold</button>
+                        <button class="cost-chip" [class.selected]="tempFilterCost === '3'" (click)="selectCost('3')">3 Gold</button>
+                        <button class="cost-chip" [class.selected]="tempFilterCost === '4'" (click)="selectCost('4')">4 Gold</button>
+                        <button class="cost-chip" [class.selected]="tempFilterCost === '5'" (click)="selectCost('5')">5 Gold</button>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <!-- SET -->
+                    <div class="filter-group">
+                        <label class="filter-label">SET</label>
+                        <div class="select-wrapper">
+                            <select [(ngModel)]="tempFilterSet">
+                                <option value="">All</option>
+                                <option *ngFor="let set of sets" [value]="set.id">{{ set.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- STATUS -->
+                    <div class="filter-group">
+                        <label class="filter-label">STATUS</label>
+                        <div class="select-wrapper">
+                            <select [(ngModel)]="tempFilterChampStatus">
+                                <option value="">All</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <!-- TIER (Maps to TYPE in UI) -->
+                    <div class="filter-group">
+                        <label class="filter-label">TYPE</label>
+                        <div class="select-wrapper">
+                            <select [(ngModel)]="tempFilterTier">
+                                <option value="">All</option>
+                                <option value="MELEE">MELEE</option>
+                                <option value="RANGED">RANGED</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- SET STATUS (Maps to unassignedSet) -->
+                    <div class="filter-group">
+                        <label class="filter-label">SET STATUS</label>
+                        <div class="select-wrapper">
+                            <select [(ngModel)]="tempFilterUnassignedSet">
+                                <option value="">All</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TRAITS -->
+                <div class="filter-group">
+                    <label class="filter-label">TRAITS</label>
+                    <div class="trait-search-box">
+                        <input type="text" placeholder="Search traits..." [(ngModel)]="traitSearch">
+                    </div>
+                    <div class="trait-list">
+                        <div class="trait-item" *ngFor="let trait of filteredTraits"
+                            [class.selected]="tempFilterTrait === trait.name"
+                            (click)="tempFilterTrait = tempFilterTrait === trait.name ? '' : trait.name;">
+                            <div class="trait-item-info">
+                                <strong>{{ trait.name }}</strong>
+                                <span class="trait-type">{{ trait.type }}</span>
+                            </div>
+                            <span class="trait-set">{{ trait.setName }}</span>
+                        </div>
+                        <div *ngIf="filteredTraits.length === 0" class="no-traits">Không tìm thấy trait</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-cancel" (click)="closeFilterModal()">Cancel</button>
+                <div>
+                    <button class="btn-reset" (click)="resetFilter()">Reset</button>
+                    <button class="btn-apply" (click)="applyFilter()">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

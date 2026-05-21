@@ -1,0 +1,174 @@
+<div class="page-container">
+    <div class="page-header">
+        <div class="title-section">
+            <h1>Traits <span class="badge">{{ totalElements }}</span></h1>
+        </div>
+
+        <div class="action-section">
+            <button class="btn-delete" *ngIf="selectedIds.size > 0" (click)="deleteSelected()">
+                Xóa đã chọn ({{ selectedIds.size }})
+            </button>
+            <div class="search-box">
+                <input type="text" placeholder="Search traits..." [(ngModel)]="keyword"
+                    (ngModelChange)="searchData()">
+            </div>
+            <button class="btn-filter" (click)="openFilterModal()">
+                Filter
+            </button>
+            <button class="btn-create" routerLink="/cms/traits/create">+ Create</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="col-check">
+                        <input type="checkbox" [checked]="isAllSelected()" (change)="toggleAllSelection()">
+                    </th>
+                    <th>TRAITS ⇅</th>
+                    <th>DESCRIPTION ⇅</th>
+                    <th>SET ⇅</th>
+                    <th>SET STATUS</th>
+                    <th>TYPE ⇅</th>
+                    <th>BREAKPOINTS</th>
+                    <th>STATUS</th>
+                    <th>UPDATED AT ⇅</th>
+                    <th>RESTORE STATUS</th>
+                    <th class="col-action">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let trait of traits">
+                    <td>
+                        <input type="checkbox" [checked]="selectedIds.has(trait.id)"
+                            (change)="toggleSelection(trait.id)">
+                    </td>
+                    <td class="trait-info">
+                        <div class="trait-name-block">
+                            <strong>{{ trait.name }}</strong>
+                            <span class="trait-code">{{ trait.slug }}</span>
+                        </div>
+                    </td>
+                    <td class="col-desc" [title]="trait.description">{{ trait.description || '-' }}</td>
+                    <td>{{ trait.setName || '-' }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="trait.setDeleted ? 'lock' : 'active'">
+                            {{ trait.setDeleted ? 'Set inactive' : 'Set active' }}
+                        </span>
+                    </td>
+                    <td>{{ trait.type || '-' }}</td>
+                    <td>
+                        <div class="breakpoints-container">
+                            <span class="breakpoint-badge" *ngFor="let bp of trait.breakpoints">
+                                {{ bp.count }}
+                            </span>
+                            <span *ngIf="!trait.breakpoints || trait.breakpoints.length === 0">-</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge" [ngClass]="(trait.status === 'INACTIVE' || trait.deleted) ? 'lock' : 'active'">
+                            {{ (trait.status === 'INACTIVE' || trait.deleted) ? 'Inactive' : 'Active' }}
+                        </span>
+                    </td>
+                    <td>{{ trait.updatedAt | date:'yyyy/MM/dd HH:mm' }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="trait.canRestore ? 'active' : 'lock'">
+                            {{ trait.canRestore ? 'Can restore' : 'Cannot restore' }}
+                        </span>
+                    </td>
+                    <td class="col-action">
+                        <div class="action-menu">
+                            <button class="action-trigger" (click)="toggleDropdown(trait.id, $event)">
+                                ⋮
+                            </button>
+                            <div class="dropdown-content" *ngIf="activeDropdownId === trait.id">
+                                <button class="dropdown-item" [routerLink]="['/cms/traits/view', trait.id]">
+                                    XEM CHI TIẾT
+                                </button>
+                                <button class="dropdown-item" [routerLink]="['/cms/traits/edit', trait.id]">
+                                    CHỈNH SỬA
+                                </button>
+                                <div class="divider"></div>
+                                <button class="dropdown-item delete" (click)="deleteTrait(trait.id)">
+                                    XÓA
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <app-pagination [page]="page" [size]="size" [totalPages]="totalPages" [totalElements]="totalElements"
+        (pageChange)="changePage($event)" (sizeChange)="changePageSize($event)">
+    </app-pagination>
+
+    <!-- Filter Modal -->
+    <div class="modal-overlay" *ngIf="showFilterModal" (click)="closeFilterModal()">
+        <div class="modal-filter" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Filter</h2>
+                <button class="close-btn" (click)="closeFilterModal()">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- SET -->
+                <div class="filter-group">
+                    <label class="filter-label">SET</label>
+                    <div class="select-wrapper">
+                        <select [(ngModel)]="tempFilterSet">
+                            <option value="">All</option>
+                            <option *ngFor="let set of sets" [value]="set.id">{{ set.name }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- STATUS -->
+                <div class="filter-group">
+                    <label class="filter-label">STATUS</label>
+                    <div class="select-wrapper">
+                        <select [(ngModel)]="tempFilterTraitStatus">
+                            <option value="">All</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="INACTIVE">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- TYPE -->
+                <div class="filter-group">
+                    <label class="filter-label">TYPE</label>
+                    <div class="select-wrapper">
+                        <select [(ngModel)]="tempFilterType">
+                            <option value="">All</option>
+                            <option value="ORIGIN">Origin</option>
+                            <option value="CLASS">Class</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- RESTORE STATUS -->
+                <div class="filter-group">
+                    <label class="filter-label">RESTORE STATUS</label>
+                    <div class="select-wrapper">
+                        <select [(ngModel)]="tempFilterRestoreStatus">
+                            <option value="">All</option>
+                            <option value="can_restore">Can restore</option>
+                            <option value="cannot_restore">Cannot restore</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-cancel" (click)="closeFilterModal()">Cancel</button>
+                <div>
+                    <button class="btn-reset" (click)="resetFilter()">Reset</button>
+                    <button class="btn-apply" (click)="applyFilter()">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

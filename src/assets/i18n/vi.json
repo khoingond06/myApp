@@ -1,0 +1,24 @@
+{
+  "MENU": {
+    "OVERVIEW": "TỔNG QUAN",
+    "DASHBOARD": "Bảng điều khiển",
+    "CONTENT_MANAGEMENT": "QUẢN LÝ NỘI DUNG",
+    "SETS": "Mùa giải",
+    "CHAMPIONS": "Tướng",
+    "TRAITS": "Hệ tộc",
+    "ITEMS": "Trang bị",
+    "TEAMS": "Đội hình",
+    "SYSTEM": "HỆ THỐNG",
+    "NOTIFICATION": "Thông báo",
+    "USERS": "Người dùng",
+    "ROLES_PERMISSIONS": "Vai trò & Quyền"
+  },
+  "HEADER": {
+    "HOME": "Trang chủ",
+    "MESSAGES": "Tin nhắn",
+    "NOTIFICATIONS": "Thông báo",
+    "CHANGE_PASSWORD": "Đổi mật khẩu",
+    "EXIT_CMS": "Thoát vùng CMS",
+    "LOGOUT": "Đăng xuất"
+  }
+}

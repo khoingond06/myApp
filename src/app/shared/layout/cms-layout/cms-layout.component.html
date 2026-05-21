@@ -6,39 +6,39 @@
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-group">TỔNG QUAN</div>
-      <a class="nav-item" [routerLink]="['/cms/dashboard']" routerLinkActive="active">Bảng điều khiển</a>
+      <div class="nav-group">{{ 'MENU.OVERVIEW' | translate }}</div>
+      <a class="nav-item" [routerLink]="['/cms/dashboard']" routerLinkActive="active">{{ 'MENU.DASHBOARD' | translate }}</a>
 
-      <div class="nav-group">QUẢN LÝ NỘI DUNG</div>
-      <a class="nav-item" [routerLink]="['/cms/sets']" routerLinkActive="active">Mùa giải</a>
-      <a class="nav-item" >Tướng</a>
-      <a class="nav-item">Hệ tộc</a>
-      <a class="nav-item" [routerLink]="['/cms/items']" routerLinkActive="active">Trang bị</a>
-      <a class="nav-item" [routerLink]="['/cms/teams']" routerLinkActive="active">Đội hình</a>
+      <div class="nav-group">{{ 'MENU.CONTENT_MANAGEMENT' | translate }}</div>
+      <a class="nav-item" [routerLink]="['/cms/sets']" routerLinkActive="active">{{ 'MENU.SETS' | translate }}</a>
+      <a class="nav-item" [routerLink]="['/cms/champions']" routerLinkActive="active">{{ 'MENU.CHAMPIONS' | translate }}</a>
+      <a class="nav-item" [routerLink]="['/cms/traits']" routerLinkActive="active">{{ 'MENU.TRAITS' | translate }}</a>
+      <a class="nav-item" [routerLink]="['/cms/items']" routerLinkActive="active">{{ 'MENU.ITEMS' | translate }}</a>
+      <a class="nav-item" [routerLink]="['/cms/teams']" routerLinkActive="active">{{ 'MENU.TEAMS' | translate }}</a>
 
-      <div class="nav-group">HỆ THỐNG</div>
-      <a class="nav-item" [routerLink]="['/cms/notification']" routerLinkActive="active">Thông báo</a>
-      <a class="nav-item" [routerLink]="['/cms/users']" routerLinkActive="active">Người dùng</a>
-      <a class="nav-item" [routerLink]="['/cms/role']" routerLinkActive="active">Vai trò & Quyền</a>
+      <div class="nav-group">{{ 'MENU.SYSTEM' | translate }}</div>
+      <a class="nav-item" [routerLink]="['/cms/notification']" routerLinkActive="active">{{ 'MENU.NOTIFICATION' | translate }}</a>
+      <a class="nav-item" [routerLink]="['/cms/users']" routerLinkActive="active">{{ 'MENU.USERS' | translate }}</a>
+      <a class="nav-item" [routerLink]="['/cms/role']" routerLinkActive="active">{{ 'MENU.ROLES_PERMISSIONS' | translate }}</a>
     </nav>
 
     <div class="sidebar-footer">
-      <button (click)="logout()" class="btn-logout-sidebar">Đăng xuất</button>
+      <button (click)="logout()" class="btn-logout-sidebar">{{ 'HEADER.LOGOUT' | translate }}</button>
     </div>
   </aside>
 
   <!-- Main Content -->
   <main class="main-content">
     <header class="cms-header">
-      <div class="breadcrumb" [routerLink]="['/brank']">Trang chủ > <b>{{ currentTitle }}</b></div>
+      <div class="breadcrumb" [routerLink]="['/brank']">{{ 'HEADER.HOME' | translate }} > <b>{{ currentTitle }}</b></div>
       
       <div class="header-tools">
         <!-- Ngôn ngữ -->
         <div class="tool-item dropdown-trigger" (click)="toggleDropdown('lang', $event)">
-          <span class="lang-text">🌐 VI</span>
+          <span class="lang-text">🌐 {{ languageService.getCurrentLang() === 'vi' ? 'VI' : 'EN' }}</span>
           <div class="dropdown-menu lang-menu" *ngIf="activeDropdown === 'lang'">
-            <div class="menu-item active">VN Tiếng Việt</div>
-            <div class="menu-item">US English</div>
+            <div class="menu-item" [class.active]="languageService.getCurrentLang() === 'vi'" (click)="languageService.setLanguage('vi')">VN Tiếng Việt</div>
+            <div class="menu-item" [class.active]="languageService.getCurrentLang() === 'en'" (click)="languageService.setLanguage('en')">US English</div>
           </div>
         </div>
 
@@ -46,7 +46,7 @@
         <div class="tool-item dropdown-trigger" (click)="toggleDropdown('msg', $event)">
           <span class="icon">💬</span>
           <div class="dropdown-menu list-menu" *ngIf="activeDropdown === 'msg'">
-            <div class="menu-header">Tin nhắn</div>
+            <div class="menu-header">{{ 'HEADER.MESSAGES' | translate }}</div>
             <div class="list-item" *ngFor="let m of myInfo">
               <div class="item-body">
                 <div class="item-top"><strong>{{ m.otherUsername }}</strong></div>
@@ -60,7 +60,7 @@
         <div class="tool-item dropdown-trigger" (click)="toggleDropdown('noti', $event)">
           <span class="icon">🔔</span>
           <div class="dropdown-menu list-menu" *ngIf="activeDropdown === 'noti'">
-            <div class="menu-header">Thông báo</div>
+            <div class="menu-header">{{ 'HEADER.NOTIFICATIONS' | translate }}</div>
             <div class="list-item" *ngFor="let n of notifications">
               <div class="item-body">
                 <div class="item-top"><strong>{{ n.title }}</strong></div>
@@ -79,10 +79,10 @@
           </div>
           <div class="dropdown-menu profile-menu" *ngIf="activeDropdown === 'profile'">
             <div class="profile-header"><strong>{{ userName }}</strong></div>
-            <div class="menu-item">Đổi mật khẩu</div>
-            <div class="menu-item" [routerLink]="['/brank']">Thoát vùng CMS</div>
+            <div class="menu-item">{{ 'HEADER.CHANGE_PASSWORD' | translate }}</div>
+            <div class="menu-item" [routerLink]="['/brank']">{{ 'HEADER.EXIT_CMS' | translate }}</div>
             <div class="divider"></div>
-            <div class="menu-item logout-red" (click)="logout()">Đăng xuất</div>
+            <div class="menu-item logout-red" (click)="logout()">{{ 'HEADER.LOGOUT' | translate }}</div>
           </div>
         </div>
       </div>

@@ -1,14 +1,16 @@
 import { Component, inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../../core/auth/services/auth.service';
 import { CmsService } from '../../../features/cms/services/cms.service';
 import { APP_ROUTES } from '../../../core/constants/app-routes.constants';
+import { LanguageService } from '../../../core/services/language.service';
 
 @Component({
   selector: 'app-cms-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, TranslateModule],
   templateUrl: './cms-layout.component.html',
   styleUrl: './cms-layout.component.scss'
 })
@@ -16,6 +18,7 @@ export class CmsLayoutComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private cmsService = inject(CmsService);
+  public languageService = inject(LanguageService);
 
   userName = this.authService.getUserInfo()?.username || 'Admin';
 

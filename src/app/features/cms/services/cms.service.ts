@@ -65,4 +65,8 @@ export class CmsService {
   getUser() {
     return this.http.get(API_ENDPOINTS.USER.GET_ALL);
   }
+
+  getTraits(page: number = 0, size: number = 1000) {
+    return this.http.get(`${API_ENDPOINTS.TRAIT.GET_ALL}?page=${page}&size=${size}`);
+  }
 }

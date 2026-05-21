@@ -4,7 +4,7 @@ export const API_ENDPOINTS = {
   AUTH: {
     SIGN_IN: `${API_BASE_URL}/auth2/signin`,
     SIGN_UP: `${API_BASE_URL}/auth2/signup`,
-    REFRESH_TOKEN: `${API_BASE_URL}/auth2/refresh`,  
+    REFRESH_TOKEN: `${API_BASE_URL}/auth2/refresh`,
     LOGOUT: `${API_BASE_URL}/auth2/logout`,
   },
   NOTIFICATION: {
@@ -29,7 +29,7 @@ export const API_ENDPOINTS = {
     UPDATE: (id: number) => `${API_BASE_URL}/roles/${id}`,
     UPDATE_PERMISSIONS: (id: number) => `${API_BASE_URL}/roles/${id}/permissions`,
   },
-  PERMISSIONS:{
+  PERMISSIONS: {
     GET_ALL: `${API_BASE_URL}/permissions`,
     GET_BY_ID: (id: number) => `${API_BASE_URL}/permissions/${id}`,
     CREATE: `${API_BASE_URL}/permissions`,
@@ -48,7 +48,7 @@ export const API_ENDPOINTS = {
     FIND_BY_ID: (id: number) => `${API_BASE_URL}/cms/items/${id}`,
     CREATE: `${API_BASE_URL}/cms/items`,
     SEARCH: (name: string) => `${API_BASE_URL}/cms/items?name=${name}`,
-    DELETE: (id: number) => `${API_BASE_URL}/cms/items/${id}`,  
+    DELETE: (id: number) => `${API_BASE_URL}/cms/items/${id}`,
   },
   TEAM_COMPS: {
     GET_ALL: `${API_BASE_URL}/cms/team-comp`,
@@ -56,8 +56,16 @@ export const API_ENDPOINTS = {
     DELETE: (id: number) => `${API_BASE_URL}/cms/team-comp/${id}`,
   },
   CHAMPION: {
-    GET_ALL: `${API_BASE_URL}/cms/champions`,
-    GET_BY_SET: (setId: number) => `${API_BASE_URL}/champs/set/${setId}`,
+    GET_ALL: `${API_BASE_URL}/cms/champs/admin/search`,
+    GET_BY_ID: (id: number) => `${API_BASE_URL}/cms/champs/${id}`,
+    GET_BY_SET: (setId: number) => `${API_BASE_URL}/cms/champs/set/${setId}`,
+    DELETE: (id: number) => `${API_BASE_URL}/cms/champs/${id}`,
+    BULK_DELETE: `${API_BASE_URL}/cms/champs/bulk`,
   },
-  
+  TRAIT: {
+    GET_ALL: `${API_BASE_URL}/cms/traits/admin/search`,
+    DELETE: (id: number) => `${API_BASE_URL}/cms/traits/${id}`,
+    BULK_DELETE: `${API_BASE_URL}/cms/traits/bulk`,
+  },
+
 } as const;

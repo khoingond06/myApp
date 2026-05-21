@@ -1,0 +1,24 @@
+{
+  "MENU": {
+    "OVERVIEW": "OVERVIEW",
+    "DASHBOARD": "Dashboard",
+    "CONTENT_MANAGEMENT": "CONTENT MANAGEMENT",
+    "SETS": "Sets",
+    "CHAMPIONS": "Champions",
+    "TRAITS": "Traits",
+    "ITEMS": "Items",
+    "TEAMS": "Team Comps",
+    "SYSTEM": "SYSTEM",
+    "NOTIFICATION": "Notifications",
+    "USERS": "Users",
+    "ROLES_PERMISSIONS": "Roles & Permissions"
+  },
+  "HEADER": {
+    "HOME": "Home",
+    "MESSAGES": "Messages",
+    "NOTIFICATIONS": "Notifications",
+    "CHANGE_PASSWORD": "Change Password",
+    "EXIT_CMS": "Exit CMS",
+    "LOGOUT": "Logout"
+  }
+}

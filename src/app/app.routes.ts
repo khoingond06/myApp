@@ -63,6 +63,18 @@ export const routes: Routes = [
         component: ItemComponent
       },
       {
+        path: 'champions',
+        loadComponent: () => import('./features/cms/pages/champions/champion.component').then(m => m.ChampionComponent)
+      },
+      {
+        path: 'champions/view/:id',
+        loadComponent: () => import('./features/cms/pages/champions/champion.component').then(m => m.ChampionComponent)
+      },
+      {
+        path: 'traits',
+        loadComponent: () => import('./features/cms/pages/traits/trait.component').then(m => m.TraitComponent)
+      },
+      {
         path: 'items/create',
         loadComponent: () => import('./features/cms/pages/items/item-create/item-create.component').then(m => m.ItemCreateComponent)
       },

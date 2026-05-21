@@ -72,49 +72,56 @@
         (pageChange)="changePage($event)" (sizeChange)="changePageSize($event)">
     </app-pagination>
 
-    <div *ngIf="showFilterModal">
+    <div *ngIf="showFilterModal" class="modal-filter">
         <div>
             <h1>filter</h1>
         </div>
-        <div>
-            <div>
-                <label>Mùa giải</label>
-                <select  [(ngModel)] = "filterset">
-                    <option value="">All</option>
-                    <option *ngFor="let item of sets" [value]="item.id">{{item.name}}</option>
-                </select>
+        <div class="model-content">
+            <div class="model-content1">
+                <div class="model-detail">
+                    <label>Mùa giải</label>
+                    <select [(ngModel)]="filterset">
+                        <option value="">All</option>
+                        <option *ngFor="let item of sets" [value]="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="model-detail">
+                    <label>Tier</label>
+                    <select [(ngModel)]="filterTier">
+                        <option value="">All</option>
+                        <option value="S">S</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                <label>Tier</label>
-                <select [(ngModel)]="filterTier">
-                    <option value="">All</option>
-                    <option value="S">S</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
-            </div>
-            <div>
-                <label>Item Status</label>
-                <select [(ngModel)]="filterItemStatus">
-                    <option value="">All</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-            </div>
-            <div>
-                <label>Set Status</label>
-                <select [(ngModel)]="filterSetStatus">
-                    <option value="">All</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
+            <div class="model-content1">
+                <div class="model-detail">
+                    <label>Item Status</label>
+                    <select [(ngModel)]="filterItemStatus">
+                        <option value="">All</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="model-detail">
+                    <label>Set Status</label>
+                    <select [(ngModel)]="filterSetStatus">
+                        <option value="">All</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
             </div>
         </div>
-        <div>
-            <button (click) = "applyFilter()">Filter</button>
-            <button (click) = "resetFilter()">Reset</button>
+        <div class="model-footer">
+            <button (click)="closefiltermodal()">Cancel</button>
+            <div>
+                <button (click)="resetFilter()">Reset</button>
+                <button (click)="applyFilter()">Filter</button>
+            </div>
         </div>
     </div>
 </div>
