@@ -1,0 +1,21 @@
+{
+  "/api/v1/auth2/*": "/auth2_$1",
+  "/api/v1/notifications*": "/notifications$1",
+  "/api/v1/chat/conversations*": "/conversations$1",
+  "/api/v1/users*": "/users$1",
+  "/api/v1/roles*": "/roles$1",
+  "/api/v1/permissions*": "/permissions$1",
+  
+  "/api/v1/cms/sets*": "/sets$1",
+  "/api/v1/cms/items*": "/items$1",
+  "/api/v1/cms/team-comp*": "/teamComps$1",
+  
+  "/api/v1/cms/traits/admin/search*": "/traits$1",
+  "/api/v1/cms/traits/bulk": "/traits",
+  "/api/v1/cms/traits/:id": "/traits/:id",
+  
+  "/api/v1/cms/champs/admin/search*": "/champions$1",
+  "/api/v1/cms/champs/bulk": "/champions",
+  "/api/v1/cms/champs/set/:id": "/champions?setId=:id",
+  "/api/v1/cms/champs/:id": "/champions/:id"
+}

@@ -1,0 +1,95 @@
+{
+  "traits": [
+    {
+      "id": 1,
+      "name": "Băng Đảng",
+      "slug": "bang-dang",
+      "description": "Các tướng Băng Đảng nhận thêm Giáp và Kháng Phép...",
+      "setName": "Set 10",
+      "setDeleted": false,
+      "type": "ORIGIN",
+      "breakpoints": [{ "count": 3 }, { "count": 5 }, { "count": 7 }],
+      "updatedAt": "2024-03-25T10:00:00Z",
+      "canRestore": true,
+      "status": "ACTIVE"
+    },
+    {
+      "id": 2,
+      "name": "Đấu Sĩ",
+      "slug": "dau-si",
+      "description": "Đội của bạn nhận thêm Máu tối đa.",
+      "setName": "Set 10",
+      "setDeleted": false,
+      "type": "CLASS",
+      "breakpoints": [{ "count": 2 }, { "count": 4 }, { "count": 6 }],
+      "updatedAt": "2024-03-25T10:30:00Z",
+      "canRestore": true,
+      "status": "ACTIVE"
+    }
+  ],
+  "champions": [
+    {
+      "id": 1,
+      "name": "Darius",
+      "slug": "darius",
+      "cost": 1,
+      "tier": "MELEE",
+      "traits": [{ "name": "Băng Đảng" }],
+      "deleted": false,
+      "updatedAt": "2024-03-25T11:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Yasuo",
+      "slug": "yasuo",
+      "cost": 2,
+      "tier": "MELEE",
+      "traits": [{ "name": "Song Kiếm" }],
+      "deleted": false,
+      "updatedAt": "2024-03-25T11:05:00Z"
+    }
+  ],
+  "sets": [
+    {
+      "id": 10,
+      "name": "TFT Set 10: Remix Rumble",
+      "status": "ACTIVE"
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "name": "Kiếm B.F.",
+      "description": "+10 Sức mạnh Công kích",
+      "status": "ACTIVE"
+    }
+  ],
+  "teamComps": [],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@example.com",
+      "role": "ADMIN"
+    }
+  ],
+  "roles": [],
+  "permissions": [],
+  "notifications": [
+    {
+      "id": 1,
+      "title": "Welcome",
+      "content": "Chào mừng bạn đến với hệ thống CMS."
+    }
+  ],
+  "conversations": [],
+  "auth2_signin": [
+    {
+      "token": "mock-jwt-token-12345",
+      "user": {
+        "id": 1,
+        "username": "admin"
+      }
+    }
+  ]
+}

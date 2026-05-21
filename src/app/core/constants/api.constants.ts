@@ -1,5 +1,5 @@
-export const API_BASE_URL = 'http://172.16.16.50:8888/api/v1';
-
+// export const API_BASE_URL = 'http://172.16.16.50:8888/api/v1'; // Real Server
+export const API_BASE_URL = 'http://localhost:3000/api/v1'; // JSON Server Mock
 export const API_ENDPOINTS = {
   AUTH: {
     SIGN_IN: `${API_BASE_URL}/auth2/signin`,
